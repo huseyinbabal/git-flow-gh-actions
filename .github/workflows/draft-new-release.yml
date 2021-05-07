@@ -54,3 +54,9 @@ jobs:
                        --reviewer ${{ github.actor }} \
                        --body "Hi @${{ github.actor }}!
                               This PR is for ${{ github.event.inputs.version }} release."
+
+      - name: Invoke workflow without inputs
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Release Package Preparation
+          token: ${{ secrets.PERSONAL_TOKEN }}
