@@ -1,8 +1,8 @@
 name: "Release Branch Push"
 
 env:
-  git_user: 'GitHub actions'
-  git_email: 'noreply@github.com'
+  git_user: 'SRE Automation'
+  git_email: 'sre-team@hazelcast.com'
 
 on:
   push:
@@ -20,3 +20,4 @@ jobs:
         with:
           workflow: Release Package Preparation
           token: ${{ secrets.PERSONAL_TOKEN }}
+          inputs: '{ "version": "${{ github.event.inputs.version }}", "is_rc": "true" }'
