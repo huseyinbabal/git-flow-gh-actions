@@ -1,0 +1,56 @@
+name: Release Package Build
+on:
+  push:
+    branches:
+      - 'release/*'
+jobs:
+  release_package:
+    name: Create Release Candidate Packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Tag
+        run: |
+          git config --global user.name 'SRE Automation'
+          git config --global user.email 'sre-team@hazelcast.com'
+          CURRENT_BRANCH=$(git branch --show-current)
+          git fetch origin $CURRENT_BRANCH
+          git checkout $CURRENT_BRANCH
+
+          if [[ "$CURRENT_BRANCH" != *"release/"* ]]; then
+            echo "${CURRENT_BRANCH} is not a release branch, exiting..."
+            exit 1
+          fi
+
+          BASE_TAG=$(echo ${CURRENT_BRANCH##*/})
+          REMOTE_TAG=$(git ls-remote --tags origin $BASE_TAG)
+          echo "${REMOTE_TAG}"
+          if [ -n "$REMOTE_TAG" ]; then
+              echo "${BASE_TAG} is already in remote, exiting..."
+              exit 1
+          fi
+          echo "Will start packaging for base tag ${BASE_TAG}"
+          LATEST_RELEASE_TAG=$(git ls-remote --tags origin | grep "refs/tags/${BASE_TAG}" | grep -v "\^{}" | awk -F \. '{print $4}' | sort -nr | head -1)
+          NEW_RELEASE_REVISION=$(( $LATEST_RELEASE_TAG + 1 ))
+          NEW_RELEASE_VERSION="${BASE_TAG}-rc.${NEW_RELEASE_REVISION}"
+          echo "Latest release tag is ${BASE_TAG}-rc.${LATEST_RELEASE_TAG}, new version will be ${BASE_TAG}-rc.${NEW_RELEASE_REVISION}"
+          cat << EOF > cluster-service/app/resources/config.yaml
+            dependencies:
+                infrastructure-creator: ${NEW_RELEASE_VERSION}
+                consumer-service: ${NEW_RELEASE_VERSION}
+                data-structure-handler: ${NEW_RELEASE_VERSION}
+                custom-class-checker: ${NEW_RELEASE_VERSION}
+                hot-backup-service: ${NEW_RELEASE_VERSION}
+                metric-consumer: ${NEW_RELEASE_VERSION}
+                health-service: ${NEW_RELEASE_VERSION}
+                replication-service: ${NEW_RELEASE_VERSION}
+                diagnostic-service: ${NEW_RELEASE_VERSION}
+          EOF
+          git add .
+          git commit -am "${NEW_RELEASE_VERSION} release preparation" || true
+          git push origin $CURRENT_BRANCH || true
+          git tag -a $NEW_RELEASE_VERSION -m "${NEW_RELEASE_VERSION}" || true
+          git push -q origin ${NEW_RELEASE_VERSION} || true

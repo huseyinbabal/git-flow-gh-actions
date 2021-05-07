@@ -37,7 +37,7 @@ jobs:
         run: |
           gh release create ${{ env.RELEASE_VERSION }} --target "${{ github.event.pull_request.merge_commit_sha }}" \
                                                        --title "${{ env.RELEASE_VERSION }}"
-      - name: Merge master into develop branch
+      - name: Merge master into develop branch after ${{ env.RELEASE_VERSION }} release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
