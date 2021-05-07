@@ -5,6 +5,9 @@ on:
       version:
         description: 'Version of release'
         required: true
+      is_rc:
+        description: 'Is this package a release candidate or not.'
+        required: true
 
 jobs:
   release_package:
@@ -35,11 +38,17 @@ jobs:
               echo "${BASE_TAG} is already in remote, exiting..."
               exit 1
           fi
-          echo "Will start packaging for base tag ${BASE_TAG}"
-          LATEST_RELEASE_TAG=$(git ls-remote --tags origin | grep "refs/tags/${BASE_TAG}" | grep -v "\^{}" | awk -F \. '{print $4}' | sort -nr | head -1)
-          NEW_RELEASE_REVISION=$(( $LATEST_RELEASE_TAG + 1 ))
-          NEW_RELEASE_VERSION="${BASE_TAG}-rc.${NEW_RELEASE_REVISION}"
-          echo "Latest release tag is ${BASE_TAG}-rc.${LATEST_RELEASE_TAG}, new version will be ${BASE_TAG}-rc.${NEW_RELEASE_REVISION}"
+
+          if [[ "${{ github.event.inputs.is_rc }}" == "true" ]]; then
+            echo "Will start packaging for base tag: ${BASE_TAG}"
+            LATEST_RELEASE_TAG=$(git ls-remote --tags origin | grep "refs/tags/${BASE_TAG}" | grep -v "\^{}" | awk -F \. '{print $4}' | sort -nr | head -1)
+            NEW_RELEASE_REVISION=$(( $LATEST_RELEASE_TAG + 1 ))
+            NEW_RELEASE_VERSION="${BASE_TAG}-rc.${NEW_RELEASE_REVISION}"
+            echo "Latest release tag is ${BASE_TAG}-rc.${LATEST_RELEASE_TAG}, new version will be ${BASE_TAG}-rc.${NEW_RELEASE_REVISION}"
+          else
+            NEW_RELEASE_VERSION="${{ github.event.inputs.version }}"
+          fi
+
           cat << EOF > cluster-service/app/resources/config.yaml
             dependencies:
                 infrastructure-creator: ${NEW_RELEASE_VERSION}

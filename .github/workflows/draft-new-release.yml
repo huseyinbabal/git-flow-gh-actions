@@ -1,8 +1,8 @@
 name: "Draft new release"
 
 env:
-  git_user: 'GitHub actions'
-  git_email: 'noreply@github.com'
+  git_user: 'SRE Automation'
+  git_email: 'sre-team@hazelcast.com'
 
 on:
   workflow_dispatch:
@@ -18,20 +18,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Create release branch
-        run: git checkout -b release/${{ github.event.inputs.version }}
+      - name: Initialize mandatory git config
+        run: |
+          git config user.name "${{ env.git_user }}"
+          git config user.email ${{ env.git_email }}
+
+      - name: Switch branch
+        run: |
+          git fetch --all
+          git checkout release/${{ github.event.inputs.version }}
 
       - name: Update changelog
         uses: thomaseizinger/keep-a-changelog-new-release@1.1.0
         with:
           version: ${{ github.event.inputs.version }}
-
-      # In order to make a commit, we need to initialize a user.
-      # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
-      - name: Initialize mandatory git config
-        run: |
-          git config user.name "${{ env.git_user }}"
-          git config user.email ${{ env.git_email }}
 
       - name: Commit changelog and manifest files
         id: make-commit
@@ -41,7 +41,7 @@ jobs:
 
           echo "::set-output name=commit::$(git rev-parse HEAD)"
 
-      - name: Push new branch
+      - name: Push changes
         run: git push origin release/${{ github.event.inputs.version }}
 
       - name: Create pull request
@@ -64,4 +64,4 @@ jobs:
         with:
           workflow: Release Package Preparation
           token: ${{ secrets.PERSONAL_TOKEN }}
-          inputs: '{ "version": "${{ github.event.inputs.version }}" }'
+          inputs: '{ "version": "${{ github.event.inputs.version }}", "is_rc": "false" }'

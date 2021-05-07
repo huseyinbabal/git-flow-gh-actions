@@ -1,0 +1,41 @@
+name: "Code Freeze"
+
+env:
+  git_user: 'SRE Automation'
+  git_email: 'sre-team@hazelcast.com'
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of next release'
+        required: true
+
+jobs:
+  code-freeze:
+    name: "Code Freeze"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create release branch
+        run: git checkout -b release/${{ github.event.inputs.version }}
+
+      - name: Initialize mandatory git config
+        run: |
+          git config user.name "${{ env.git_user }}"
+          git config user.email ${{ env.git_email }}
+
+      - name: Push new branch
+        run: git push origin release/${{ github.event.inputs.version }}
+
+      - uses: actions/checkout@v2
+        with:
+          ref: "release/${{ github.event.inputs.version }}"
+
+      - name: Invoke workflow without inputs
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Release Package Preparation
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          inputs: '{ "version": "${{ github.event.inputs.version }}", "is_rc": "true" }'
