@@ -1,4 +1,4 @@
-name: Release Package Build
+name: Release Package Preparation
 on:
   push:
     branches:
