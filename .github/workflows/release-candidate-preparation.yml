@@ -1,8 +1,5 @@
 name: Release Package Preparation
-on:
-  push:
-    branches:
-      - 'release/*'
+on: [workflow_dispatch]
 jobs:
   release_package:
     name: Create Release Candidate Packages
