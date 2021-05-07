@@ -55,6 +55,10 @@ jobs:
                        --body "Hi @${{ github.actor }}!
                               This PR is for ${{ github.event.inputs.version }} release."
 
+      - uses: actions/checkout@v2
+        with:
+          ref: "release/${{ github.event.inputs.version }}"
+
       - name: Invoke workflow without inputs
         uses: benc-uk/workflow-dispatch@v1
         with:
