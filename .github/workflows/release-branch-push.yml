@@ -1,0 +1,22 @@
+name: "Release Branch Push"
+
+env:
+  git_user: 'GitHub actions'
+  git_email: 'noreply@github.com'
+
+on:
+  push:
+    branches:
+      - 'release/*'
+
+jobs:
+  release-branch-push:
+    name: "Prepare release branch"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Invoke workflow without inputs
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Release Package Preparation
+          token: ${{ secrets.PERSONAL_TOKEN }}

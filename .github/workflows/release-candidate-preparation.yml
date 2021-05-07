@@ -1,8 +1,11 @@
 name: Release Package Preparation
 on:
-  push:
-    branches:
-      - 'release/*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of release'
+        required: true
+
 jobs:
   release_package:
     name: Create Release Candidate Packages
@@ -11,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.head_ref }}
+          ref: release/${{ github.event.inputs.version }}
       - name: Tag
         run: |
           git config --global user.name 'SRE Automation'
