@@ -1,10 +1,10 @@
   dependencies:
-      infrastructure-creator: 1.14.6-rc.1
-      consumer-service: 1.14.6-rc.1
-      data-structure-handler: 1.14.6-rc.1
-      custom-class-checker: 1.14.6-rc.1
-      hot-backup-service: 1.14.6-rc.1
-      metric-consumer: 1.14.6-rc.1
-      health-service: 1.14.6-rc.1
-      replication-service: 1.14.6-rc.1
-      diagnostic-service: 1.14.6-rc.1
+      infrastructure-creator: 
+      consumer-service: 
+      data-structure-handler: 
+      custom-class-checker: 
+      hot-backup-service: 
+      metric-consumer: 
+      health-service: 
+      replication-service: 
+      diagnostic-service: 
