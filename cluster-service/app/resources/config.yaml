@@ -1,0 +1,10 @@
+  dependencies:
+      infrastructure-creator: 1.13.0-rc.2
+      consumer-service: 1.13.0-rc.2
+      data-structure-handler: 1.13.0-rc.2
+      custom-class-checker: 1.13.0-rc.2
+      hot-backup-service: 1.13.0-rc.2
+      metric-consumer: 1.13.0-rc.2
+      health-service: 1.13.0-rc.2
+      replication-service: 1.13.0-rc.2
+      diagnostic-service: 1.13.0-rc.2
