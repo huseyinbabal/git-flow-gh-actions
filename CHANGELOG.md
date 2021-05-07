@@ -4,6 +4,8 @@ This file is for keeping historical changelog items
 
 ## [Unreleased]
 
+## [1.14.5] - 2021-05-07
+
 ## [1.14.0] - 2021-05-07
 
 ## [1.13.0] - 2021-05-07
@@ -12,7 +14,9 @@ This file is for keeping historical changelog items
 
 ## [1.0.5] - 2021-05-05
 
-[Unreleased]: https://github.com/huseyinbabal/git-flow-gh-actions/compare/1.14.0...HEAD
+[Unreleased]: https://github.com/huseyinbabal/git-flow-gh-actions/compare/1.14.5...HEAD
+
+[1.14.5]: https://github.com/huseyinbabal/git-flow-gh-actions/compare/1.14.0...1.14.5
 
 [1.14.0]: https://github.com/huseyinbabal/git-flow-gh-actions/compare/1.13.0...1.14.0
 
