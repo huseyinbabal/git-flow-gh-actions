@@ -40,7 +40,7 @@ jobs:
           fi
 
           if [[ "${{ github.event.inputs.is_rc }}" == "true" ]]; then
-            NEW_RELEASE_REVISION="${{ github.event.inputs.version }}"
+            NEW_RELEASE_VERSION="${{ github.event.inputs.version }}"
           else
             echo "Will start packaging for base tag ${BASE_TAG}"
             LATEST_RELEASE_TAG=$(git ls-remote --tags origin | grep "refs/tags/${BASE_TAG}" | grep -v "\^{}" | awk -F \. '{print $4}' | sort -nr | head -1)
