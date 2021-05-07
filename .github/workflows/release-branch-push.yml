@@ -15,9 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Extract version from branch name (for release branches)
+        run: |
+          BRANCH_NAME=$(git branch --show-current)
+          VERSION=${BRANCH_NAME#release/}
+
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
       - name: Invoke workflow without inputs
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: Release Package Preparation
           token: ${{ secrets.PERSONAL_TOKEN }}
-          inputs: '{ "version": "${{ github.event.inputs.version }}", "is_rc": "true" }'
+          inputs: '{ "version": "${{ env.RELEASE_VERSION }}", "is_rc": "true" }'
