@@ -5,6 +5,9 @@ on:
       version:
         description: 'Version of release'
         required: true
+      is_rc:
+        description: 'Is this package a release candidate or not.'
+        required: true
 
 jobs:
   release_package:
