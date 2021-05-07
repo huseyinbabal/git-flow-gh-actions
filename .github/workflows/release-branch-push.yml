@@ -11,7 +11,7 @@ on:
 
 jobs:
   release-branch-push:
-    name: "Prepare release branch"
+    name: "Prepare release branch1"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
