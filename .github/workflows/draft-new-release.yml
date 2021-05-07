@@ -64,3 +64,4 @@ jobs:
         with:
           workflow: Release Package Preparation
           token: ${{ secrets.PERSONAL_TOKEN }}
+          ref: ${{ github.head_ref }}
