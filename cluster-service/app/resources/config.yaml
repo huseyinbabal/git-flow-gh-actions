@@ -1,10 +1,10 @@
   dependencies:
-      infrastructure-creator: 1.9.0
-      consumer-service: 1.9.0
-      data-structure-handler: 1.9.0
-      custom-class-checker: 1.9.0
-      hot-backup-service: 1.9.0
-      metric-consumer: 1.9.0
-      health-service: 1.9.0
-      replication-service: 1.9.0
-      diagnostic-service: 1.9.0
+      infrastructure-creator: 2.0.0
+      consumer-service: 2.0.0
+      data-structure-handler: 2.0.0
+      custom-class-checker: 2.0.0
+      hot-backup-service: 2.0.0
+      metric-consumer: 2.0.0
+      health-service: 2.0.0
+      replication-service: 2.0.0
+      diagnostic-service: 2.0.0
