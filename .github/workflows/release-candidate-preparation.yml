@@ -66,4 +66,4 @@ jobs:
           git push origin $CURRENT_BRANCH || true
           git tag -a $NEW_RELEASE_VERSION -m "${NEW_RELEASE_VERSION}" || true
           git push -q origin ${NEW_RELEASE_VERSION} || true
-          curl ${{ secrets.JENKINS_BUILD_BY_TAG_URL }}&tag=${NEW_RELEASE_VERSION}
+          curl -XGET ${{ secrets.JENKINS_BUILD_BY_TAG_URL }}&tag=${NEW_RELEASE_VERSION}
