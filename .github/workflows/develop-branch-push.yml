@@ -13,7 +13,7 @@ on:
 
 jobs:
   release-branch-push:
-    name: "Prepare develop branch"
+    name: "Prepare develop branch1"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
