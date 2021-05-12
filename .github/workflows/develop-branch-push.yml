@@ -1,0 +1,22 @@
+name: "Release Branch Push"
+
+env:
+  git_user: 'SRE Automation'
+  git_email: 'sre-team@hazelcast.com'
+
+on:
+  pull_request:
+    branches:
+      - develop
+    types:
+      - closed
+
+jobs:
+  release-branch-push:
+    name: "Prepare develop branch"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract version from branch name (for Vrelease branches)
+        run: |
+          curl -XGET "${{ secrets.JENKINS_BUILD_BY_BRANCH_URL }}&branch=develop&env=dev"
