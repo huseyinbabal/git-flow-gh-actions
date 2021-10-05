@@ -20,7 +20,7 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
           VERSION=${BRANCH_NAME#release/}
-
+          echo "RELEASE_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Extract version from branch name (for hotfix branches)
@@ -28,7 +28,7 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
           VERSION=${BRANCH_NAME#hotfix/}
-
+          echo "RELEASE_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create Release
@@ -39,13 +39,13 @@ jobs:
                                                        --title "${{ env.RELEASE_VERSION }}"
           curl -XGET "${{ secrets.JENKINS_BUILD_BY_TAG_URL }}&tag=${RELEASE_VERSION}"
 
-      - name: Merge master into develop branch after ${{ env.RELEASE_VERSION }} release
+      - name: Merge ${{ env.RELEASE_BRANCH }} into develop branch after ${{ env.RELEASE_VERSION }} release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr create --title "Merge master into develop branch after ${{ env.RELEASE_VERSION }} release" \
-                       --head master \
+          gh pr create --title "Merge ${{ env.RELEASE_BRANCH }} into develop branch after ${{ env.RELEASE_VERSION }} release" \
+                       --head ${{ env.RELEASE_BRANCH }} \
                        --base develop \
                        --reviewer ${{ github.actor }} \
                        --body "Hi @${{ github.actor }}!
-                              This PR is for synchronizing master back into develop branch."
+                              This PR is for synchronizing release branch ${{ env.RELEASE_BRANCH }} back into develop branch."
