@@ -1,10 +1,10 @@
   dependencies:
-      infrastructure-creator: 12.0.0-rc.1
-      consumer-service: 12.0.0-rc.1
-      data-structure-handler: 12.0.0-rc.1
-      custom-class-checker: 12.0.0-rc.1
-      hot-backup-service: 12.0.0-rc.1
-      metric-consumer: 12.0.0-rc.1
-      health-service: 12.0.0-rc.1
-      replication-service: 12.0.0-rc.1
-      diagnostic-service: 12.0.0-rc.1
+      infrastructure-creator: 12.0.2-rc.1
+      consumer-service: 12.0.2-rc.1
+      data-structure-handler: 12.0.2-rc.1
+      custom-class-checker: 12.0.2-rc.1
+      hot-backup-service: 12.0.2-rc.1
+      metric-consumer: 12.0.2-rc.1
+      health-service: 12.0.2-rc.1
+      replication-service: 12.0.2-rc.1
+      diagnostic-service: 12.0.2-rc.1
