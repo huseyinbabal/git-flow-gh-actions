@@ -35,6 +35,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git tag -a ${{ env.RELEASE_VERSION }} -m "${{ env.RELEASE_VERSION }}"
+          git push -q origin ${{ env.RELEASE_VERSION }}
+          echo "Pushed new annotated tag: ${{ env.RELEASE_VERSION }}, will create release now..."
           gh release create ${{ env.RELEASE_VERSION }} --target "${{ github.event.pull_request.merge_commit_sha }}" \
                                                        --title "${{ env.RELEASE_VERSION }}"
           curl -XGET "${{ secrets.JENKINS_BUILD_BY_TAG_URL }}&tag=${RELEASE_VERSION}"
