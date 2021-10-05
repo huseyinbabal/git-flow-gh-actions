@@ -35,6 +35,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git config --global user.name 'SRE Automation'
+          git config --global user.email 'sre-team@hazelcast.com'
           git tag -a ${{ env.RELEASE_VERSION }} -m "${{ env.RELEASE_VERSION }}"
           git push -q origin ${{ env.RELEASE_VERSION }}
           echo "Pushed new annotated tag: ${{ env.RELEASE_VERSION }}, will create release now..."
