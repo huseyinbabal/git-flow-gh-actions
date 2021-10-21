@@ -1,8 +1,9 @@
 name: Pull Request Stats
 
 on:
- schedule:
-  - cron: "* * * * *"
+ pull_request:
+  branches:
+   - master
 
 jobs:
   stats:
