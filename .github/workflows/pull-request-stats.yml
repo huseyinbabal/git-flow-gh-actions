@@ -10,3 +10,4 @@ jobs:
         uses: flowwer-dev/pull-request-stats@master
         with:
           token: ${{ secrets.PERSONAL_TOKEN }}
+          organization: 'huseyinbabal'
