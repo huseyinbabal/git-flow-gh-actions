@@ -11,3 +11,7 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_TOKEN }}
           organization: 'huseyinbabal'
+          period: 7
+          charts: true
+          disable-links: true
+          sort-by: 'COMMENTS'
