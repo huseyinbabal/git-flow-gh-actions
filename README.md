@@ -1,1 +1,1 @@
-# git-flow-gh-actions
+# git-flow-gh-actions docs
