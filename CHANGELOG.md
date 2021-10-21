@@ -1,6 +1,6 @@
 # Changelog
 
-This file is for keeping historical changelog items
+This file is mostly for keeping historical changelog items
 
 ## [Unreleased]
 
