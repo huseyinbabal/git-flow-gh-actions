@@ -16,7 +16,8 @@ jobs:
     name: "Prepare develop branch1"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Extract version from branch name (for Vrelease branches)
         run: |
-          curl -XGET "${{ secrets.JENKINS_BUILD_BY_BRANCH_URL }}&branch=develop&env=dev"
+          git describe --tags --abbrev=0
+          # curl -XGET "${{ secrets.JENKINS_BUILD_BY_BRANCH_URL }}&branch=develop&env=dev"
